@@ -43,11 +43,6 @@
 		public function FlashFactory(dataParser:DataParser = null)
 		{
 			super(this, dataParser);
-			
-			if (!EventObject._soundEventManager) 
-			{
-				EventObject._soundEventManager = new FlashArmatureDisplay();
-			}
 		}
 		
 		/**
@@ -195,6 +190,10 @@
 		 */
 		public function get soundEventManager(): FlashArmatureDisplay
 		{
+			if (!EventObject._soundEventManager)
+			{
+				EventObject._soundEventManager = new FlashArmatureDisplay();
+			}
 			return EventObject._soundEventManager as FlashArmatureDisplay;
 		}
 	}
