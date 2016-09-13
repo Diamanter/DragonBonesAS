@@ -20,7 +20,7 @@ package dragonBones.flash
 	 */
 	public class FlashArmatureDisplay extends Sprite implements IArmatureDisplay
 	{
-		private static const _enterFrameHelper:Shape = new Shape();
+		private static var _enterFrameHelper:Shape;
 		private static const _clock:WorldClock = new WorldClock();
 		private static function _clockHandler(event:Event):void 
 		{
@@ -43,14 +43,19 @@ package dragonBones.flash
 		public function FlashArmatureDisplay()
 		{
 			super();
-			
+			addEventListener(flash.events.Event.ADDED_TO_STAGE, onAddedToStage);
+		}
+
+		protected function onAddedToStage(event:Event):void {
+			removeEventListener(flash.events.Event.ADDED_TO_STAGE, onAddedToStage);
+			if (_enterFrameHelper==null) _enterFrameHelper = new Shape();
 			if (!_enterFrameHelper.hasEventListener(Event.ENTER_FRAME))
 			{
 				_clock.time = getTimer() * 0.001;
 				_enterFrameHelper.addEventListener(Event.ENTER_FRAME, _clockHandler, false, -999999);
 			}
 		}
-		
+
 		/**
 		 * @inheritDoc
 		 */
